@@ -9,67 +9,67 @@ const list = document.getElementById('board');
 const cards = [
     {
         id: 'img-1-1',
-        img: 'img/001-lithuania.svg',
+        img: 'img/lithuania.svg',
     },
     {
         id: 'img-2-1',
-        img: 'img/002-ukraine.svg',
+        img: 'img/ukraine.svg',
     },
     {
         id: 'img-3-1',
-        img: 'img/003-belarus.svg',
+        img: 'img/belarus.svg',
     },
     {
         id: 'img-4-1',
-        img: 'img/004-germany.svg',
+        img: 'img/germany.svg',
     },
     {
         id: 'img-5-1',
-        img: 'img/005-russia.svg',
+        img: 'img/russia.svg',
     },
     {
         id: 'img-6-1',
-        img: 'img/006-czech-republic.svg',
+        img: 'img/czech-republic.svg',
     },
     {
         id: 'img-7-1',
-        img: 'img/007-slovakia.svg',
+        img: 'img/slovakia.svg',
     },
     {
         id: 'img-8-1',
-        img: 'img/008-poland.svg',
+        img: 'img/poland.svg',
     },
     {
         id: 'img-1-2',
-        img: 'img/001-lithuania.svg',
+        img: 'img/lithuania.svg',
     },
     {
         id: 'img-2-2',
-        img: 'img/002-ukraine.svg',
+        img: 'img/ukraine.svg',
     },
     {
         id: 'img-3-2',
-        img: 'img/003-belarus.svg',
+        img: 'img/belarus.svg',
     },
     {
         id: 'img-4-2',
-        img: 'img/004-germany.svg',
+        img: 'img/germany.svg',
     },
     {
         id: 'img-5-2',
-        img: 'img/005-russia.svg',
+        img: 'img/russia.svg',
     },
     {
         id: 'img-6-2',
-        img: 'img/006-czech-republic.svg',
+        img: 'img/czech-republic.svg',
     },
     {
         id: 'img-7-2',
-        img: 'img/007-slovakia.svg',
+        img: 'img/slovakia.svg',
     },
     {
         id: 'img-8-2',
-        img: 'img/008-poland.svg',
+        img: 'img/poland.svg',
     },
 ];
 
@@ -120,6 +120,7 @@ for (let i = 0; i < shuffledBoard.length; i++) {
 
     imgNode.classList.add('flag');
     imgNode.setAttribute('src', shuffledBoard[i].img);
+    imgNode.setAttribute('id', shuffledBoard[i].id);
     figure.appendChild(imgNode);
 
 
