@@ -9,67 +9,67 @@ const list = document.getElementById('board');
 const cards = [
     {
         id: 'img-1-1',
-        img: 'img/lithuania.svg',
+        img: 'img/lithuania.png',
     },
     {
         id: 'img-2-1',
-        img: 'img/ukraine.svg',
+        img: 'img/ukraine.png',
     },
     {
         id: 'img-3-1',
-        img: 'img/belarus.svg',
+        img: 'img/belarus.png',
     },
     {
         id: 'img-4-1',
-        img: 'img/germany.svg',
+        img: 'img/germany.png',
     },
     {
         id: 'img-5-1',
-        img: 'img/russia.svg',
+        img: 'img/russia.png',
     },
     {
         id: 'img-6-1',
-        img: 'img/czech-republic.svg',
+        img: 'img/czech-republic.png',
     },
     {
         id: 'img-7-1',
-        img: 'img/slovakia.svg',
+        img: 'img/slovakia.png',
     },
     {
         id: 'img-8-1',
-        img: 'img/poland.svg',
+        img: 'img/poland.png',
     },
     {
         id: 'img-1-2',
-        img: 'img/lithuania.svg',
+        img: 'img/lithuania.png',
     },
     {
         id: 'img-2-2',
-        img: 'img/ukraine.svg',
+        img: 'img/ukraine.png',
     },
     {
         id: 'img-3-2',
-        img: 'img/belarus.svg',
+        img: 'img/belarus.png',
     },
     {
         id: 'img-4-2',
-        img: 'img/germany.svg',
+        img: 'img/germany.png',
     },
     {
         id: 'img-5-2',
-        img: 'img/russia.svg',
+        img: 'img/russia.png',
     },
     {
         id: 'img-6-2',
-        img: 'img/czech-republic.svg',
+        img: 'img/czech-republic.png',
     },
     {
         id: 'img-7-2',
-        img: 'img/slovakia.svg',
+        img: 'img/slovakia.png',
     },
     {
         id: 'img-8-2',
-        img: 'img/poland.svg',
+        img: 'img/poland.png',
     },
 ];
 
