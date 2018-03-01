@@ -133,7 +133,9 @@ function reloadGame() {
     while (list.firstChild) {
         list.removeChild(list.firstChild);
     };
-    initializeMemoryGame()
+    initializeMemoryGame();
+    moves = 0;
+    countMoves();
 }
 
 const shuffleButton = document.getElementById('shuffle-btn');
@@ -158,12 +160,12 @@ function showClickedCard(event) {
             setTimeout(function () {
                 previousCard.lastChild.classList.add('matched');
                 parentCard.lastChild.classList.add('matched');
-            }, 1200);
+            }, 1000);
         } else {
             setTimeout(function () {
                 previousCard.classList.remove('flipped');
                 parentCard.classList.remove('flipped');
-            }, 1200);
+            }, 1000);
         }
     }
 }
