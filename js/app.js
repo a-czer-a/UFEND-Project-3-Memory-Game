@@ -190,4 +190,7 @@ initializeMemoryGame();
 
 
 // TODO: 
-//check reload button
+// moves count
+// timer
+// rating based on number of moves
+// check reload button

@@ -17,9 +17,13 @@ body {
 }
 
 body {
-    background: #ffffff url('../img/geometry2.png');
-    /* Background pattern from Subtle Patterns */
+    background-image: url(../img/flat-map.jpg);
+    background-size: cover;
     font-family: 'Coda', cursive;
+}
+
+header {
+    text-align: center;
 }
 
 .container {
@@ -34,15 +38,19 @@ h1 {
     font-weight: 300;
 }
 
+h2 {
+    font-size: 1em;
+}
+
 /*
  * Styles for the deck of cards
  */
 
 .deck {
-    width: 660px;
-    min-height: 680px;
-    background: #bbb;
-    padding: 32px;
+    width: 600px;
+    min-height: 630px;
+    background: rgba(46, 61, 73, 0.9);
+    padding: 30px 38px;
     border-radius: 10px;
     box-shadow: 12px 15px 20px 0 rgba(46, 61, 73, 0.5);
     display: flex;
@@ -50,13 +58,14 @@ h1 {
     justify-content: space-between;
     align-items: center;
     margin: 0 0 3em;
+    position: relative;
 }
 
 .deck .card-container {
-    height: 125px;
-    width: 125px;
+    height: 110px;
+    width: 110px;
     position: relative;
-    background: #2e3d49;
+    background: rgba(46, 61, 73, 0.9);
     font-size: 0;
     color: #fff;
     border-radius: 6px;
@@ -64,8 +73,8 @@ h1 {
     display: flex;
     justify-content: center;
     align-items: center;
-    /*    box-shadow: 5px 2px 20px 0 rgba(46, 61, 73, 0.5);*/
-    perspective: 800px;
+    box-shadow: 5px 2px 10px 0 rgba(46, 61, 73, 0.8);
+    perspective: 1000px;
 }
 
 .card-container .card {
@@ -89,11 +98,11 @@ h1 {
 }
 
 .card .front {
-    background: #2e3d49;
+    background: #eaebec;
 }
 
 .card .back {
-    background: #fff;
+    background: #eaebec;
     transform: rotateY(180deg);
 }
 
@@ -136,7 +145,7 @@ h1 {
 .score-panel {
     text-align: left;
     width: 345px;
-    margin-bottom: 10px;
+    margin-bottom: 20px;
 }
 
 .score-panel .stars {
@@ -154,4 +163,26 @@ h1 {
 .score-panel .restart {
     float: right;
     cursor: pointer;
+}
+
+/* FOOTER */
+
+footer {
+    text-align: center;
+    margin: 0 auto 20px;
+}
+
+footer p {
+    font-size: 13px;
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    color: #3867d6;
+    text-decoration: none;
+}
+
+.light {
+    color: #3867d6;
 }
