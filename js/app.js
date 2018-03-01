@@ -1,6 +1,7 @@
 function initializeMemoryGame() {
     createNewBoard();
     addEventListenersToCards();
+    countMoves();
 }
 /*
  * Create a list that holds all cards
@@ -74,6 +75,7 @@ const cards = [
 ];
 
 const flippedCards = [];
+let moves = 0;
 
 
 // Shuffle function from http://stackoverflow.com/a/2450976
@@ -145,6 +147,8 @@ function showClickedCard(event) {
     const figureId = parentCard.getAttribute('id');
 
     flippedCards.push(figureId);
+    moves = moves + 1;
+    countMoves();
 
     if (flippedCards.length === 2) {
         const figureTwo = flippedCards.pop();
@@ -172,6 +176,11 @@ function pairIsMatched(figureOne, figureTwo) {
     } else {
         return false;
     }
+}
+
+function countMoves() {
+    const displayedMovesNumber = document.getElementById('moves-counter');
+    displayedMovesNumber.innerHTML = moves;
 }
 
 initializeMemoryGame();
