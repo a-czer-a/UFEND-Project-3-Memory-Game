@@ -1,11 +1,11 @@
 function initializeMemoryGame() {
+    createNewBoard();
     addEventListenersToCards();
 }
 /*
- * Create a list that holds all of your cards
+ * Create a list that holds all cards
  */
 const list = document.getElementById('board');
-
 const cards = [
     {
         id: 'img-1-1',
@@ -73,16 +73,8 @@ const cards = [
     },
 ];
 
-const openedCards = [];
-const matchedCards = [];
+const flippedCards = [];
 
-
-/*
- * Display the cards on the page
- *   - shuffle the list of cards using the provided "shuffle" method below
- *   - loop through each card and create its HTML
- *   - add each card's HTML to the page
- */
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
@@ -100,50 +92,87 @@ function shuffle(array) {
     return cards;
 }
 
-const shuffleButton = document.getElementById('shuffle-btn');
-shuffleButton.addEventListener('click', shuffle);
+function createNewBoard() {
+    const shuffledBoard = shuffle(cards);
 
-const shuffledBoard = shuffle(cards);
+    for (let i = 0; i < shuffledBoard.length; i++) {
+        const cardContainer = document.createElement('li');
+        const singleCard = document.createElement('div');
+        const figure = document.createElement('figure');
+        const secondFigure = document.createElement('figure');
+        const imgNode = document.createElement('img');
 
-for (let i = 0; i < shuffledBoard.length; i++) {
-    const cardContainer = document.createElement('li');
-    const singleCard = document.createElement('div');
-    const figure = document.createElement('figure');
-    const secondFigure = document.createElement('figure');
+        list.appendChild(cardContainer);
+        cardContainer.appendChild(singleCard);
+        singleCard.appendChild(figure);
+        singleCard.setAttribute('id', shuffledBoard[i].id);
+        const figureFront = singleCard.insertBefore(secondFigure, figure);
 
-    list.appendChild(cardContainer);
-    cardContainer.appendChild(singleCard);
-    singleCard.appendChild(figure);
-    const figureFront = singleCard.insertBefore(secondFigure, figure);
+        imgNode.classList.add('flag');
+        imgNode.setAttribute('src', shuffledBoard[i].img);
+        figure.appendChild(imgNode);
 
-    const imgNode = document.createElement('img');
-
-    imgNode.classList.add('flag');
-    imgNode.setAttribute('src', shuffledBoard[i].img);
-    imgNode.setAttribute('id', shuffledBoard[i].id);
-    figure.appendChild(imgNode);
-
-
-    cardContainer.classList.add('card-container');
-    singleCard.classList.add('card');
-    figure.classList.add('back');
-    figureFront.classList.add('front');
+        cardContainer.classList.add('card-container');
+        singleCard.classList.add('card');
+        figure.classList.add('back');
+        figureFront.classList.add('front');
+    }
 }
 
 
 function addEventListenersToCards() {
-    const cardContainer = document.querySelectorAll('.card-container');
-    for (let i = 0; i < cardContainer.length; i++) {
-        cardContainer[i].addEventListener('click', showClickedCard);
+    const clickedFigures = document.querySelectorAll('.front');
+    for (let i = 0; i < clickedFigures.length; i++) {
+        clickedFigures[i].addEventListener('click', showClickedCard);
     }
 }
+
+function reloadGame() {
+    while (list.firstChild) {
+        list.removeChild(list.firstChild);
+    };
+    initializeMemoryGame()
+}
+
+const shuffleButton = document.getElementById('shuffle-btn');
+shuffleButton.addEventListener('click', reloadGame);
+
 
 function showClickedCard(event) {
     const clickedFigure = event.target;
     const parentCard = clickedFigure.parentElement;
     parentCard.classList.add('flipped');
+    const figureId = parentCard.getAttribute('id');
+
+    flippedCards.push(figureId);
+
+    if (flippedCards.length === 2) {
+        const figureTwo = flippedCards.pop();
+        const figureOne = flippedCards.pop();
+        const previousCard = document.querySelector('#' + figureOne);
+        if (pairIsMatched(figureOne, figureTwo)) {
+            setTimeout(function () {
+                previousCard.lastChild.classList.add('matched');
+                parentCard.lastChild.classList.add('matched');
+            }, 1200);
+        } else {
+            setTimeout(function () {
+                previousCard.classList.remove('flipped');
+                parentCard.classList.remove('flipped');
+            }, 1200);
+        }
+    }
 }
 
+function pairIsMatched(figureOne, figureTwo) {
+    const figureOneId = figureOne.substr(0, 5);
+    const figureTwoId = figureTwo.substr(0, 5);
+    if (figureOneId === figureTwoId) {
+        return true;
+    } else {
+        return false;
+    }
+}
 
 initializeMemoryGame();
 
@@ -158,3 +187,7 @@ initializeMemoryGame();
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
+
+
+// TODO: 
+//check reload button
