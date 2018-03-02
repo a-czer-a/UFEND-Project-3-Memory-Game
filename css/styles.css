@@ -36,10 +36,15 @@ header {
 h1 {
     font-family: 'Open Sans', sans-serif;
     font-weight: 300;
+    margin: 30px 20px 5px;
 }
 
 h2 {
     font-size: 1em;
+    font-family: 'Kaushan Script', sans-serif;
+    margin: 0 0 15px;
+    font-style: italic;
+    text-align: right;
 }
 
 /*
@@ -47,10 +52,10 @@ h2 {
  */
 
 .deck {
-    width: 600px;
+    width: 580px;
     min-height: 630px;
-    background: rgba(46, 61, 73, 0.9);
-    padding: 30px 38px;
+    background: rgba(46, 61, 73, 0.8);
+    padding: 15px 30px;
     border-radius: 10px;
     box-shadow: 12px 15px 20px 0 rgba(46, 61, 73, 0.5);
     display: flex;
@@ -65,7 +70,7 @@ h2 {
     height: 110px;
     width: 110px;
     position: relative;
-    background: rgba(46, 61, 73, 0.9);
+    background: rgba(46, 61, 73, 0.8);
     font-size: 0;
     color: #fff;
     border-radius: 6px;
@@ -82,8 +87,8 @@ h2 {
     height: 100%;
     position: absolute;
     transform-style: preserve-3d;
-    transition: transform 0.8s;
-    border-radius: 8px;
+    transition: transform 0.7s;
+    border-radius: 6px;
 }
 
 .card figure {
@@ -120,50 +125,112 @@ h2 {
     opacity: .9;
 }
 
-/*
-.deck .card.open {
-    transform: rotateY(0);
-    background: #02b3e4;
-    cursor: default;
-}
-
-.deck .card.show {
-    font-size: 33px;
-}
-
-.deck .card.match {
-    cursor: default;
-    background: #02ccba;
-    font-size: 33px;
-}
-*/
 
 /*
  * Styles for the Score Panel
  */
 
 .score-panel {
-    text-align: left;
-    width: 345px;
+    text-align: center;
+    width: 580px;
+    padding: 0 30px;
     margin-bottom: 20px;
 }
 
 .score-panel .stars {
-    margin: 0;
+    margin: 20px 0;
     padding: 0;
     display: inline-block;
-    margin: 0 5px 0 0;
 }
 
 .score-panel .stars li {
     list-style: none;
+    font-size: 1.2em;
     display: inline-block;
+    padding: 8px;
 }
 
-.score-panel .restart {
-    float: right;
+.panel-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.reload-button {
+    padding: 8px;
+    width: 100px;
+    background: #fb4f44;
+    /*    background: rgba(46, 61, 73, 0.8);*/
+    color: #fff;
+    border-radius: 8px;
     cursor: pointer;
 }
+
+.reload-button:hover,
+.reload-button:active,
+.reload-button:focus {
+    opacity: .9;
+}
+
+
+.moves,
+.timer {
+    padding-top: 5px;
+}
+
+.score-panel .timer {
+    max-width: 100px;
+}
+
+/* MODAL */
+
+.modal {
+    display: none;
+    z-index: 1;
+    position: fixed;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(27, 110, 128, 0.9);
+    text-align: center;
+    color: #175e6d
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: 25% auto;
+    padding: 40px;
+    width: 50%;
+    border-radius: 8px;
+    border: 1px solid #0b2f36;
+    box-shadow: 7px 7px 15px 0 rgba(0, 0, 0, 0.3), 0 7px 25px 0 rgba(0, 0, 0, 0.2);
+}
+
+.modal .reload-button {
+    margin-top: 20px;
+    background-color: #1fb9d6;
+    box-shadow: 0 5px #ddd;
+}
+
+modal .reload-button:hover {
+    background-color: #1890a6;
+}
+
+.modal .reload-button:active {
+    background-color: #1890a6;
+    box-shadow: 0 1px #ddd;
+    transform: translateY(4px);
+}
+
+.modal-content svg {
+    padding: 8px 0 0 10px;
+    font-size: 2em;
+}
+
+h3 {
+    margin-top: 0;
+}
+
 
 /* FOOTER */
 

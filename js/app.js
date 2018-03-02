@@ -1,4 +1,5 @@
 function initializeMemoryGame() {
+    closeCongratulationsPopup();
     createNewBoard();
     addEventListenersToCards();
     countMoves();
@@ -75,7 +76,10 @@ const cards = [
 ];
 
 const flippedCards = [];
+const matchedCards = [];
 let moves = 0;
+//let seconds = 0;
+
 
 
 // Shuffle function from http://stackoverflow.com/a/2450976
@@ -130,16 +134,23 @@ function addEventListenersToCards() {
 }
 
 function reloadGame() {
+    closeCongratulationsPopup();
     while (list.firstChild) {
         list.removeChild(list.firstChild);
     };
     initializeMemoryGame();
     moves = 0;
     countMoves();
+    //    timerOff();
 }
 
-const shuffleButton = document.getElementById('shuffle-btn');
-shuffleButton.addEventListener('click', reloadGame);
+function addEventListenersToReloadButtons() {
+    const shuffleButton = document.getElementById('shuffle-btn');
+    shuffleButton.addEventListener('click', reloadGame);
+
+    const modalButton = document.getElementById('modal-btn');
+    modalButton.addEventListener('click', initializeMemoryGame);
+}
 
 
 function showClickedCard(event) {
@@ -148,9 +159,11 @@ function showClickedCard(event) {
     parentCard.classList.add('flipped');
     const figureId = parentCard.getAttribute('id');
 
+    //    countTime();
     flippedCards.push(figureId);
     moves = moves + 1;
     countMoves();
+
 
     if (flippedCards.length === 2) {
         const figureTwo = flippedCards.pop();
@@ -160,12 +173,16 @@ function showClickedCard(event) {
             setTimeout(function () {
                 previousCard.lastChild.classList.add('matched');
                 parentCard.lastChild.classList.add('matched');
-            }, 1000);
+            }, 900);
+            matchedCards.push(figureTwo);
+            if (matchedCards.length === 8) {
+                openCongratulationsPopup();
+            }
         } else {
             setTimeout(function () {
                 previousCard.classList.remove('flipped');
                 parentCard.classList.remove('flipped');
-            }, 1000);
+            }, 900);
         }
     }
 }
@@ -182,8 +199,55 @@ function pairIsMatched(figureOne, figureTwo) {
 
 function countMoves() {
     const displayedMovesNumber = document.getElementById('moves-counter');
-    displayedMovesNumber.innerHTML = moves;
+    if (moves === 1) {
+        displayedMovesNumber.innerHTML = moves + " move";
+    } else {
+        displayedMovesNumber.innerHTML = moves + " moves";
+    }
 }
+
+function ratingWithStars() {
+    const stars = document.getElementById('stars-rating');
+    const singleStar = stars.children;
+    if (moves > 30) {
+        // nie działa!!!
+        singleStar[2].lastChild.innerHtml = '<i class="far fa-star"></i>';
+    }
+}
+
+//function timerOn(time) {
+//    if (time > 9) {
+//        return time;
+//    } else {
+//        return "0" + time;
+//    }
+//}
+
+//function timerOff() {
+//    const stopCountingTime = clearInterval(startCountingTime);
+//    seconds = 0;
+//}
+
+
+//function countTime() {
+//    const startCountingTime = setInterval(countTime, 1000);
+//    document.getElementById('seconds').innerHTML = timerOn(++seconds % 60);
+//    document.getElementById('minutes').innerHTML = timerOn(parseInt(seconds / 60, 10));
+//}
+
+function openCongratulationsPopup() {
+    setTimeout(function () {
+        const modal = document.getElementById('popup-window');
+        modal.style.display = 'block';
+    }, 900);
+
+}
+
+function closeCongratulationsPopup() {
+    const modal = document.getElementById('popup-window');
+    modal.style.display = 'none';
+}
+
 
 initializeMemoryGame();
 
@@ -201,7 +265,6 @@ initializeMemoryGame();
 
 
 // TODO: 
-// moves count
 // timer
 // rating based on number of moves
 // check reload button

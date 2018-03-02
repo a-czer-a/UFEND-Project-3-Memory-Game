@@ -5,9 +5,12 @@
     <meta charset="utf-8">
     <title>Matching Game</title>
     <meta name="description" content="">
-    <link rel="stylesheet prefetch" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">
+    <!--    <link rel="stylesheet prefetch" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.1/css/font-awesome.min.css">-->
     <link rel="stylesheet prefetch" href="https://fonts.googleapis.com/css?family=Coda">
+
+    <link href="https://fonts.googleapis.com/css?family=Kaushan+Script" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
 </head>
 
 <body>
@@ -19,17 +22,16 @@
         </header>
 
         <section class="score-panel">
-            <ul class="stars">
-                <li><i class="fa fa-star"></i></li>
-                <li><i class="fa fa-star"></i></li>
-                <li><i class="fa fa-star"></i></li>
+            <ul id="stars-rating" class="stars">
+                <li><i class="fas fa-star"></i></li>
+                <li><i class="fas fa-star"></i></li>
+                <li><i class="fas fa-star"></i></li>
             </ul>
-
-            <span id="moves-counter" class="moves">3</span> Moves
-
-            <div class="restart">
-                <!--                TODO: change for a button "start new game"-->
-                <i id="shuffle-btn" class="fa fa-repeat"></i>
+            <div class="panel-container">
+                <span id="moves-counter" class="moves">0 moves</span>
+                <!--                    <i id="shuffle-btn" class="fa fa-repeat"></i>-->
+                <button id="shuffle-btn" class="reload-button">New game</button>
+                <div class="timer"><label id="minutes">00</label>:<label id="seconds">00</label></div>
             </div>
         </section>
 
@@ -37,6 +39,13 @@
             <!--        Grid of shuffled cards-->
 
         </ul>
+        <div id="popup-window" class="modal">
+            <div class="modal-content">
+                <h3>Congratulations, you won!<i class="far fa-thumbs-up"></i></h3>
+                <p>Do you want to play again?</p>
+                <button id="modal-btn" class="reload-button">Play again</button>
+            </div>
+        </div>
 
         <footer>
             <p>Created by AgataC | 2018 </p>
