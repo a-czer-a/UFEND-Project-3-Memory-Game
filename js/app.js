@@ -2,12 +2,14 @@ function initializeMemoryGame() {
     closeCongratulationsPopup();
     createNewBoard();
     addEventListenersToCards();
+    addEventListenersToReloadButtons();
     countMoves();
+    rateWithStars();
 }
 /*
  * Create a list that holds all cards
  */
-const list = document.getElementById('board');
+const board = document.getElementById('board');
 const cards = [
     {
         id: 'img-1-1',
@@ -77,9 +79,11 @@ const cards = [
 
 const flippedCards = [];
 const matchedCards = [];
+const starOne = document.getElementById('star-one');
+const starTwo = document.getElementById('star-two');
+const starThree = document.getElementById('star-three');
 let moves = 0;
 //let seconds = 0;
-
 
 
 // Shuffle function from http://stackoverflow.com/a/2450976
@@ -108,7 +112,7 @@ function createNewBoard() {
         const secondFigure = document.createElement('figure');
         const imgNode = document.createElement('img');
 
-        list.appendChild(cardContainer);
+        board.appendChild(cardContainer);
         cardContainer.appendChild(singleCard);
         singleCard.appendChild(figure);
         singleCard.setAttribute('id', shuffledBoard[i].id);
@@ -125,6 +129,9 @@ function createNewBoard() {
     }
 }
 
+function clearBoard() {
+    board.innerHTML = "";
+}
 
 function addEventListenersToCards() {
     const clickedFigures = document.querySelectorAll('.front');
@@ -134,11 +141,13 @@ function addEventListenersToCards() {
 }
 
 function reloadGame() {
-    closeCongratulationsPopup();
-    while (list.firstChild) {
-        list.removeChild(list.firstChild);
-    };
+    //    while (board.firstChild) {
+    //        board.removeChild(board.firstChild);
+    //    };
+    clearBoard();
     initializeMemoryGame();
+    closeCongratulationsPopup();
+    resetRating();
     moves = 0;
     countMoves();
     //    timerOff();
@@ -163,7 +172,7 @@ function showClickedCard(event) {
     flippedCards.push(figureId);
     moves = moves + 1;
     countMoves();
-
+    rateWithStars();
 
     if (flippedCards.length === 2) {
         const figureTwo = flippedCards.pop();
@@ -206,13 +215,22 @@ function countMoves() {
     }
 }
 
-function ratingWithStars() {
-    const stars = document.getElementById('stars-rating');
-    const singleStar = stars.children;
-    if (moves > 30) {
-        // nie działa!!!
-        singleStar[2].lastChild.innerHtml = '<i class="far fa-star"></i>';
+function rateWithStars() {
+    const starOne = document.getElementById('star-one');
+    const starTwo = document.getElementById('star-two');
+    const starThree = document.getElementById('star-three');
+
+    if (moves >= 40) {
+        starTwo.innerHTML = '<i class="fa fa-star-o" aria-hidden="true"></i>';
+    } else if (moves >= 25) {
+        starThree.innerHTML = '<i class="fa fa-star-o" aria-hidden="true"></i>';
     }
+}
+
+function resetRating() {
+    starOne.innerHTML = '<i class="fa fa-star" aria-hidden="true"></i>';
+    starTwo.innerHTML = '<i class="fa fa-star" aria-hidden="true"></i>';
+    starThree.innerHTML = '<i class="fa fa-star" aria-hidden="true"></i>';
 }
 
 //function timerOn(time) {
@@ -222,13 +240,13 @@ function ratingWithStars() {
 //        return "0" + time;
 //    }
 //}
-
+//
 //function timerOff() {
 //    const stopCountingTime = clearInterval(startCountingTime);
 //    seconds = 0;
 //}
-
-
+//
+//
 //function countTime() {
 //    const startCountingTime = setInterval(countTime, 1000);
 //    document.getElementById('seconds').innerHTML = timerOn(++seconds % 60);

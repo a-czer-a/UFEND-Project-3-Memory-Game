@@ -53,7 +53,7 @@ h2 {
 
 .deck {
     width: 580px;
-    min-height: 630px;
+    min-height: 580px;
     background: rgba(46, 61, 73, 0.8);
     padding: 15px 30px;
     border-radius: 10px;
@@ -145,9 +145,14 @@ h2 {
 
 .score-panel .stars li {
     list-style: none;
-    font-size: 1.2em;
     display: inline-block;
     padding: 8px;
+}
+
+.stars .fa {
+    color: rgba(27, 110, 128, 0.95);
+    /*    color: #fd752f;*/
+    font-size: 1.6em;
 }
 
 .panel-container {
@@ -158,10 +163,11 @@ h2 {
 .reload-button {
     padding: 8px;
     width: 100px;
-    background: #fb4f44;
-    /*    background: rgba(46, 61, 73, 0.8);*/
+    background-color: #fb4f44;
     color: #fff;
     border-radius: 8px;
+    font-size: 0.8em;
+    text-transform: uppercase;
     cursor: pointer;
 }
 
@@ -208,6 +214,8 @@ h2 {
 
 .modal .reload-button {
     margin-top: 20px;
+    padding: 12px;
+    width: 120px;
     background-color: #1fb9d6;
     box-shadow: 0 5px #ddd;
 }
@@ -222,9 +230,9 @@ modal .reload-button:hover {
     transform: translateY(4px);
 }
 
-.modal-content svg {
+.modal-content .fa {
     padding: 8px 0 0 10px;
-    font-size: 2em;
+    font-size: 1.7em;
 }
 
 h3 {

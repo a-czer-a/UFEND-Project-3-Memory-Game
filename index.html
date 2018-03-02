@@ -10,7 +10,8 @@
 
     <link href="https://fonts.googleapis.com/css?family=Kaushan+Script" rel="stylesheet">
     <link rel="stylesheet" href="css/styles.css">
-    <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+    <script src="https://use.fontawesome.com/f0cb29eb07.js"></script>
+    <!--    <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>-->
 </head>
 
 <body>
@@ -22,10 +23,16 @@
         </header>
 
         <section class="score-panel">
-            <ul id="stars-rating" class="stars">
+            <ul class="stars">
+                <!--
                 <li><i class="fas fa-star"></i></li>
                 <li><i class="fas fa-star"></i></li>
                 <li><i class="fas fa-star"></i></li>
+-->
+                <li id="star-one"><i class="fa fa-star" aria-hidden="true"></i></li>
+                <li id="star-two"><i class="fa fa-star" aria-hidden="true"></i></li>
+                <li id="star-three"><i class="fa fa-star" aria-hidden="true"></i></li>
+
             </ul>
             <div class="panel-container">
                 <span id="moves-counter" class="moves">0 moves</span>
@@ -41,7 +48,9 @@
         </ul>
         <div id="popup-window" class="modal">
             <div class="modal-content">
-                <h3>Congratulations, you won!<i class="far fa-thumbs-up"></i></h3>
+                <!--                <h3>Congratulations, you won!<i class="far fa-thumbs-up"></i></h3>-->
+
+                <h3>Congratulations, you won!<i class="fa fa-thumbs-o-up" aria-hidden="true"></i></h3>
                 <p>Do you want to play again?</p>
                 <button id="modal-btn" class="reload-button">Play again</button>
             </div>
