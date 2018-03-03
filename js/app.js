@@ -77,11 +77,31 @@ const cards = [
     },
 ];
 
+const cardsLabels = {
+    'img-1-1': 'Lithuania',
+    'img-1-2': 'Lithuania',
+    'img-2-1': 'Ukraine',
+    'img-2-2': 'Ukraine',
+    'img-3-1': 'Belarus',
+    'img-3-2': 'Belarus',
+    'img-4-1': 'Germany',
+    'img-4-2': 'Germany',
+    'img-5-1': 'Russia',
+    'img-5-2': 'Russia',
+    'img-6-1': 'Czech-Republic',
+    'img-6-2': 'Czech-Republic',
+    'img-7-1': 'Slovakia',
+    'img-7-2': 'Slovakia',
+    'img-8-1': 'Poland',
+    'img-8-2': 'Poland',
+};
+
 const flippedCards = [];
 const matchedCards = [];
 const starOne = document.getElementById('star-one');
 const starTwo = document.getElementById('star-two');
 const starThree = document.getElementById('star-three');
+const bubble = document.getElementById('info-bubble');
 let moves = 0;
 //let seconds = 0;
 
@@ -158,7 +178,7 @@ function addEventListenersToReloadButtons() {
     shuffleButton.addEventListener('click', reloadGame);
 
     const modalButton = document.getElementById('modal-btn');
-    modalButton.addEventListener('click', initializeMemoryGame);
+    modalButton.addEventListener('click', reloadGame);
 }
 
 
@@ -183,7 +203,11 @@ function showClickedCard(event) {
                 previousCard.lastChild.classList.add('matched');
                 parentCard.lastChild.classList.add('matched');
             }, 900);
-            matchedCards.push(figureTwo);
+
+            matchedCards.push(figureTwo); // store id's of matched cards 
+
+            showInfoBubble(cardsLabels[figureOne]); // pass matching id to function displaying info about flag's owner
+
             if (matchedCards.length === 8) {
                 openCongratulationsPopup();
             }
@@ -206,6 +230,19 @@ function pairIsMatched(figureOne, figureTwo) {
     }
 }
 
+function showInfoBubble(label) {
+    const flagName = document.getElementById('flag-name');
+    flagName.innerHTML = label;
+    bubble.style.display = "block";
+    hideInfoBubble();
+}
+
+function hideInfoBubble() {
+    setTimeout(function () {
+        bubble.style.display = "none";
+    }, 2000);
+}
+
 function countMoves() {
     const displayedMovesNumber = document.getElementById('moves-counter');
     if (moves === 1) {
@@ -220,9 +257,9 @@ function rateWithStars() {
     const starTwo = document.getElementById('star-two');
     const starThree = document.getElementById('star-three');
 
-    if (moves >= 40) {
+    if (moves >= 50) {
         starTwo.innerHTML = '<i class="fa fa-star-o" aria-hidden="true"></i>';
-    } else if (moves >= 25) {
+    } else if (moves >= 30) {
         starThree.innerHTML = '<i class="fa fa-star-o" aria-hidden="true"></i>';
     }
 }
