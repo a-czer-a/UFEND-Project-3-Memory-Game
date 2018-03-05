@@ -1,16 +1,18 @@
 function initializeMemoryGame() {
-    closeCongratulationsPopup();
+    hideCongratulationsPopup();
+    resetTimer();
+    resetRating();
     createNewBoard();
     addEventListenersToCards();
     addEventListenersToReloadButtons();
+    moves = 0;
+    matchedCards = [];
+    firstCardIsFlipped = false;
     countMoves();
-    startCountingTime();
-    displayTime();
+    setupTimer();
     rateWithStars();
 }
-/*
- * Create a list that holds all cards
- */
+
 const board = document.getElementById('board');
 const cards = [
     {
@@ -98,20 +100,26 @@ const cardsLabels = {
     'img-8-2': 'Poland',
 };
 
-const flippedCards = [];
-const matchedCards = [];
+const flippedCards = []; // stores cards flipped in 1 move
+let firstCardIsFlipped = false; // condition to start counting time
+let matchedCards = []; // stores all matched cards
+
 const starOne = document.getElementById('star-one');
 const starTwo = document.getElementById('star-two');
 const starThree = document.getElementById('star-three');
+
 const bubble = document.getElementById('info-bubble');
+
 let moves = 0;
 
+let countTime;
 let seconds = 0;
-const countTime = setInterval(startCountingTime, 1000);
 
 
-// CREATING NEW BOARD
+// CLEARING AND CREATING BOARD
 function createNewBoard() {
+    board.innerHTML = ""; // clears the board if there is any
+
     const shuffledBoard = shuffle(cards);
 
     for (let i = 0; i < shuffledBoard.length; i++) {
@@ -151,39 +159,40 @@ function shuffle(array) {
         cards[currentIndex] = cards[randomIndex];
         cards[randomIndex] = temporaryValue;
     }
-
     return cards;
 }
 
-// ADDING EVENT LISTENERS
+// block: ADDING EVENT LISTENERS
 function addEventListenersToCards() {
     const clickedFigures = document.querySelectorAll('.front');
     for (let i = 0; i < clickedFigures.length; i++) {
-        clickedFigures[i].addEventListener('click', showClickedCard);
+        clickedFigures[i].addEventListener('click', handleCardClick);
     }
 }
 
 function addEventListenersToReloadButtons() {
-    const shuffleButton = document.getElementById('shuffle-btn');
-    shuffleButton.addEventListener('click', reloadGame);
+    const shuffleButton = document.getElementById('reload-btn');
+    shuffleButton.addEventListener('click', initializeMemoryGame);
 
     const modalButton = document.getElementById('modal-btn');
-    modalButton.addEventListener('click', reloadGame);
+    modalButton.addEventListener('click', initializeMemoryGame);
 }
 
 // FLIPPING AND MATCHING CARDS
-function showClickedCard(event) {
+function handleCardClick(event) {
     const clickedFigure = event.target;
     const parentCard = clickedFigure.parentElement;
     parentCard.classList.add('flipped');
     const figureId = parentCard.getAttribute('id');
 
     flippedCards.push(figureId);
-    moves = moves + 1;
-    countMoves();
-    rateWithStars();
+    firstCardIsFlipped = true;
 
     if (flippedCards.length === 2) {
+        moves = moves + 1;
+        countMoves();
+        rateWithStars();
+
         const figureTwo = flippedCards.pop();
         const figureOne = flippedCards.pop();
         const previousCard = document.querySelector('#' + figureOne);
@@ -191,24 +200,16 @@ function showClickedCard(event) {
             setTimeout(function () {
                 previousCard.lastChild.classList.add('matched');
                 parentCard.lastChild.classList.add('matched');
-            }, 900);
+            }, 700);
 
             matchedCards.push(figureTwo); // store id's of matched cards 
-
             showInfoBubble(cardsLabels[figureOne]); // pass matching id to function displaying info about flag's owner
-
-            if (matchedCards.length === 8) { // showing modal with congratulations when there are 8 pairs that match
-                stopCountingTime();
-                getRating();
-                displayTime();
-                openCongratulationsPopup();
-
-            }
+            checkWinningCondition();
         } else {
             setTimeout(function () {
                 previousCard.classList.remove('flipped');
                 parentCard.classList.remove('flipped');
-            }, 900);
+            }, 700);
         }
     }
 }
@@ -233,52 +234,48 @@ function countMoves() {
     }
 }
 
-// CHANGING STAR RATING
+// block: STAR RATING
 function rateWithStars() {
     const starOne = document.getElementById('star-one');
     const starTwo = document.getElementById('star-two');
     const starThree = document.getElementById('star-three');
 
-    if (moves >= 50) {
+    if (moves >= 30) {
         starTwo.innerHTML = '<i class="fa fa-star-o" aria-hidden="true"></i>';
-    } else if (moves >= 30) {
+    } else if (moves >= 20) {
         starThree.innerHTML = '<i class="fa fa-star-o" aria-hidden="true"></i>';
     }
 }
 
-function getRating() {
+function displayRating() {
     const ratingInfo = document.getElementById('rating-info');
-    if (moves >= 50) {
+    if (moves >= 30) {
         ratingInfo.innerHTML = '<i class="fa fa-star" aria-hidden="true">';
-    } else if (moves >= 30) {
+    } else if (moves >= 20) {
         ratingInfo.innerHTML = '<i class="fa fa-star" aria-hidden="true"></i></i><i class="fa fa-star" aria-hidden="true"></i>';
     } else {
         ratingInfo.innerHTML = '<i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i>';
     }
 }
 
-// RELOADING GAME AND RESETING SCORES
-function reloadGame() {
-    closeCongratulationsPopup();
-    moves = 0;
-    resetTimer();
-    clearBoard();
-    startCountingTime();
-    resetRating();
-    initializeMemoryGame();
+// CHECKING IF USER WON
+function checkWinningCondition() {
+    if (matchedCards.length === 8) {
+        resetTimer();
+        displayRating();
+        displayTime();
+        showCongratulationsPopup();
+    }
 }
 
-function clearBoard() {
-    board.innerHTML = "";
-}
-
+// RESETING SCORES
 function resetRating() {
     starOne.innerHTML = '<i class="fa fa-star" aria-hidden="true"></i>';
     starTwo.innerHTML = '<i class="fa fa-star" aria-hidden="true"></i>';
     starThree.innerHTML = '<i class="fa fa-star" aria-hidden="true"></i>';
 }
 
-// TIMER
+// block: TIMER
 function timer(time) {
     if (time > 9) {
         return time;
@@ -287,14 +284,6 @@ function timer(time) {
     }
 }
 
-//function startCountingTime() {
-//    if (moves >= 1) {
-//        ++seconds
-//        document.getElementById('seconds').innerHTML = timer(seconds % 60);
-//        document.getElementById('minutes').innerHTML = timer(parseInt(seconds / 60));
-//    }
-//}
-
 function getTime() {
     let totalSeconds = timer(seconds % 60);
     let totalMinutes = timer(parseInt(seconds / 60));
@@ -302,7 +291,7 @@ function getTime() {
 }
 
 function startCountingTime() {
-    if (moves >= 1) {
+    if (firstCardIsFlipped) {
         ++seconds
         displayTime();
     }
@@ -311,34 +300,32 @@ function startCountingTime() {
 function displayTime() {
     document.getElementsByClassName('time')[0].innerHTML = getTime();
     document.getElementsByClassName('time')[1].innerHTML = getTime();
-
 }
 
-function stopCountingTime() {
-    clearInterval(countTime);
+function setupTimer() {
+    countTime = setInterval(startCountingTime, 1000);
+    document.getElementById('timer').innerHTML = '00:00';
+    seconds = 0;
 }
 
 function resetTimer() {
-    seconds = 0;
-    document.getElementById('timer').innerHTML = '00:00';
+    clearInterval(countTime);
 }
 
-// SHOWING AND HIDING CONGRATULATIONS PUPUP
-function openCongratulationsPopup() {
-    if (matchedCards.length === 8) {
-        setTimeout(function () {
-            const modal = document.getElementById('popup-window');
-            modal.style.display = 'block';
-        }, 900);
-    }
+// block: SHOWING AND HIDING CONGRATULATIONS POPUP
+function showCongratulationsPopup() {
+    setTimeout(function () {
+        const modal = document.getElementById('popup-window');
+        modal.style.display = 'block';
+    }, 900);
 }
 
-function closeCongratulationsPopup() {
+function hideCongratulationsPopup() {
     const modal = document.getElementById('popup-window');
     modal.style.display = 'none';
 }
 
-// SHOWING AND HIDING BUBBLE WITH COUNTRY NAME
+// block: SHOWING AND HIDING BUBBLE WITH COUNTRY NAME
 function showInfoBubble(label) {
     const flagName = document.getElementById('flag-name');
     flagName.innerHTML = label;
@@ -349,7 +336,7 @@ function showInfoBubble(label) {
 function hideInfoBubble() {
     setTimeout(function () {
         bubble.style.display = "none";
-    }, 2000);
+    }, 1900);
 }
 
 
