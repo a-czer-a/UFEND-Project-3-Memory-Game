@@ -55,7 +55,7 @@ h1 {
 }
 
 h2 {
-    font-size: 1em;
+    font-size: 1.1em;
     font-family: 'Kaushan Script', cursive;
     margin: 0 0 15px;
     font-style: italic;
@@ -241,6 +241,7 @@ h2 {
 .bubble p {
     margin: 0;
     padding: 0;
+    font-size: 1em;
 }
 
 .bubble:after {
@@ -306,13 +307,22 @@ modal .reload-button:hover {
     transform: translateY(4px);
 }
 
-.modal-content .fa {
+.modal-content .fa-thumbs-o-up {
     padding: 8px 0 0 10px;
     font-size: 1.7em;
 }
 
+.modal-content span {
+    margin-left: 10px;
+}
+
+.modal-content .fa-star {
+    font-size: 1em;
+    padding: 0 5px;
+}
+
 h3 {
-    margin-top: 0;
+    margin: 0 0 20px;
 }
 
 
@@ -382,7 +392,9 @@ a {
         width: 65px;
         height: 65px;
     }
-
+    .modal-content {
+        width: 80%;
+    }
 }
 
 

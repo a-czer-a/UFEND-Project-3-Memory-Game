@@ -4,6 +4,8 @@ function initializeMemoryGame() {
     addEventListenersToCards();
     addEventListenersToReloadButtons();
     countMoves();
+    startCountingTime();
+    displayTime();
     rateWithStars();
 }
 /*
@@ -103,25 +105,12 @@ const starTwo = document.getElementById('star-two');
 const starThree = document.getElementById('star-three');
 const bubble = document.getElementById('info-bubble');
 let moves = 0;
-//let seconds = 0;
+
+let seconds = 0;
+const countTime = setInterval(startCountingTime, 1000);
 
 
-// Shuffle function from http://stackoverflow.com/a/2450976
-function shuffle(array) {
-    var currentIndex = cards.length,
-        temporaryValue, randomIndex;
-
-    while (currentIndex !== 0) {
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex -= 1;
-        temporaryValue = cards[currentIndex];
-        cards[currentIndex] = cards[randomIndex];
-        cards[randomIndex] = temporaryValue;
-    }
-
-    return cards;
-}
-
+// CREATING NEW BOARD
 function createNewBoard() {
     const shuffledBoard = shuffle(cards);
 
@@ -149,28 +138,29 @@ function createNewBoard() {
     }
 }
 
-function clearBoard() {
-    board.innerHTML = "";
+// SHUFFLING CARDS
+// Shuffle function from http://stackoverflow.com/a/2450976
+function shuffle(array) {
+    var currentIndex = cards.length,
+        temporaryValue, randomIndex;
+
+    while (currentIndex !== 0) {
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex -= 1;
+        temporaryValue = cards[currentIndex];
+        cards[currentIndex] = cards[randomIndex];
+        cards[randomIndex] = temporaryValue;
+    }
+
+    return cards;
 }
 
+// ADDING EVENT LISTENERS
 function addEventListenersToCards() {
     const clickedFigures = document.querySelectorAll('.front');
     for (let i = 0; i < clickedFigures.length; i++) {
         clickedFigures[i].addEventListener('click', showClickedCard);
     }
-}
-
-function reloadGame() {
-    //    while (board.firstChild) {
-    //        board.removeChild(board.firstChild);
-    //    };
-    clearBoard();
-    initializeMemoryGame();
-    closeCongratulationsPopup();
-    resetRating();
-    moves = 0;
-    countMoves();
-    //    timerOff();
 }
 
 function addEventListenersToReloadButtons() {
@@ -181,14 +171,13 @@ function addEventListenersToReloadButtons() {
     modalButton.addEventListener('click', reloadGame);
 }
 
-
+// FLIPPING AND MATCHING CARDS
 function showClickedCard(event) {
     const clickedFigure = event.target;
     const parentCard = clickedFigure.parentElement;
     parentCard.classList.add('flipped');
     const figureId = parentCard.getAttribute('id');
 
-    //    countTime();
     flippedCards.push(figureId);
     moves = moves + 1;
     countMoves();
@@ -208,8 +197,12 @@ function showClickedCard(event) {
 
             showInfoBubble(cardsLabels[figureOne]); // pass matching id to function displaying info about flag's owner
 
-            if (matchedCards.length === 8) {
+            if (matchedCards.length === 8) { // showing modal with congratulations when there are 8 pairs that match
+                stopCountingTime();
+                getRating();
+                displayTime();
                 openCongratulationsPopup();
+
             }
         } else {
             setTimeout(function () {
@@ -230,6 +223,122 @@ function pairIsMatched(figureOne, figureTwo) {
     }
 }
 
+// COUNTING MOVES
+function countMoves() {
+    const displayedMovesNumber = document.getElementById('moves-counter');
+    if (moves === 1) {
+        displayedMovesNumber.innerHTML = moves + " move";
+    } else {
+        displayedMovesNumber.innerHTML = moves + " moves";
+    }
+}
+
+// CHANGING STAR RATING
+function rateWithStars() {
+    const starOne = document.getElementById('star-one');
+    const starTwo = document.getElementById('star-two');
+    const starThree = document.getElementById('star-three');
+
+    if (moves >= 50) {
+        starTwo.innerHTML = '<i class="fa fa-star-o" aria-hidden="true"></i>';
+    } else if (moves >= 30) {
+        starThree.innerHTML = '<i class="fa fa-star-o" aria-hidden="true"></i>';
+    }
+}
+
+function getRating() {
+    const ratingInfo = document.getElementById('rating-info');
+    if (moves >= 50) {
+        ratingInfo.innerHTML = '<i class="fa fa-star" aria-hidden="true">';
+    } else if (moves >= 30) {
+        ratingInfo.innerHTML = '<i class="fa fa-star" aria-hidden="true"></i></i><i class="fa fa-star" aria-hidden="true"></i>';
+    } else {
+        ratingInfo.innerHTML = '<i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i><i class="fa fa-star" aria-hidden="true"></i>';
+    }
+}
+
+// RELOADING GAME AND RESETING SCORES
+function reloadGame() {
+    closeCongratulationsPopup();
+    moves = 0;
+    resetTimer();
+    clearBoard();
+    startCountingTime();
+    resetRating();
+    initializeMemoryGame();
+}
+
+function clearBoard() {
+    board.innerHTML = "";
+}
+
+function resetRating() {
+    starOne.innerHTML = '<i class="fa fa-star" aria-hidden="true"></i>';
+    starTwo.innerHTML = '<i class="fa fa-star" aria-hidden="true"></i>';
+    starThree.innerHTML = '<i class="fa fa-star" aria-hidden="true"></i>';
+}
+
+// TIMER
+function timer(time) {
+    if (time > 9) {
+        return time;
+    } else {
+        return "0" + time;
+    }
+}
+
+//function startCountingTime() {
+//    if (moves >= 1) {
+//        ++seconds
+//        document.getElementById('seconds').innerHTML = timer(seconds % 60);
+//        document.getElementById('minutes').innerHTML = timer(parseInt(seconds / 60));
+//    }
+//}
+
+function getTime() {
+    let totalSeconds = timer(seconds % 60);
+    let totalMinutes = timer(parseInt(seconds / 60));
+    return `${totalMinutes}:${totalSeconds}`;
+}
+
+function startCountingTime() {
+    if (moves >= 1) {
+        ++seconds
+        displayTime();
+    }
+}
+
+function displayTime() {
+    document.getElementsByClassName('time')[0].innerHTML = getTime();
+    document.getElementsByClassName('time')[1].innerHTML = getTime();
+
+}
+
+function stopCountingTime() {
+    clearInterval(countTime);
+}
+
+function resetTimer() {
+    seconds = 0;
+    document.getElementById('timer').innerHTML = '00:00';
+}
+
+// SHOWING AND HIDING CONGRATULATIONS PUPUP
+function openCongratulationsPopup() {
+    if (matchedCards.length === 8) {
+        setTimeout(function () {
+            const modal = document.getElementById('popup-window');
+            modal.style.display = 'block';
+        }, 900);
+    }
+}
+
+function closeCongratulationsPopup() {
+    const modal = document.getElementById('popup-window');
+    modal.style.display = 'none';
+}
+
+// SHOWING AND HIDING BUBBLE WITH COUNTRY NAME
 function showInfoBubble(label) {
     const flagName = document.getElementById('flag-name');
     flagName.innerHTML = label;
@@ -243,83 +352,5 @@ function hideInfoBubble() {
     }, 2000);
 }
 
-function countMoves() {
-    const displayedMovesNumber = document.getElementById('moves-counter');
-    if (moves === 1) {
-        displayedMovesNumber.innerHTML = moves + " move";
-    } else {
-        displayedMovesNumber.innerHTML = moves + " moves";
-    }
-}
-
-function rateWithStars() {
-    const starOne = document.getElementById('star-one');
-    const starTwo = document.getElementById('star-two');
-    const starThree = document.getElementById('star-three');
-
-    if (moves >= 50) {
-        starTwo.innerHTML = '<i class="fa fa-star-o" aria-hidden="true"></i>';
-    } else if (moves >= 30) {
-        starThree.innerHTML = '<i class="fa fa-star-o" aria-hidden="true"></i>';
-    }
-}
-
-function resetRating() {
-    starOne.innerHTML = '<i class="fa fa-star" aria-hidden="true"></i>';
-    starTwo.innerHTML = '<i class="fa fa-star" aria-hidden="true"></i>';
-    starThree.innerHTML = '<i class="fa fa-star" aria-hidden="true"></i>';
-}
-
-//function timerOn(time) {
-//    if (time > 9) {
-//        return time;
-//    } else {
-//        return "0" + time;
-//    }
-//}
-//
-//function timerOff() {
-//    const stopCountingTime = clearInterval(startCountingTime);
-//    seconds = 0;
-//}
-//
-//
-//function countTime() {
-//    const startCountingTime = setInterval(countTime, 1000);
-//    document.getElementById('seconds').innerHTML = timerOn(++seconds % 60);
-//    document.getElementById('minutes').innerHTML = timerOn(parseInt(seconds / 60, 10));
-//}
-
-function openCongratulationsPopup() {
-    setTimeout(function () {
-        const modal = document.getElementById('popup-window');
-        modal.style.display = 'block';
-    }, 900);
-
-}
-
-function closeCongratulationsPopup() {
-    const modal = document.getElementById('popup-window');
-    modal.style.display = 'none';
-}
-
 
 initializeMemoryGame();
-
-
-/*
- * set up the event listener for a card. If a card is clicked:
- *  - display the card's symbol (put this functionality in another function that you call from this one)
- *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
- *  - if the list already has another card, check to see if the two cards match
- *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
- *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
- *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
- *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
- */
-
-
-// TODO: 
-// timer
-// rating based on number of moves
-// check reload button
