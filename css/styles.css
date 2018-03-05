@@ -21,10 +21,10 @@ body {
 }
 
 body {
+    position: relative;
     background-image: url(../img/flat-map.jpg);
     background-size: cover;
     font-family: 'Coda', cursive;
-    position: relative;
 }
 
 header {
@@ -48,16 +48,16 @@ header {
 }
 
 h1 {
+    margin: 30px 20px 5px;
     font-family: 'Alegreya Sans', sans-serif;
     font-weight: 300;
     font-size: 2.5em;
-    margin: 30px 20px 5px;
 }
 
 h2 {
+    margin: 0 0 15px;
     font-size: 1.1em;
     font-family: 'Kaushan Script', cursive;
-    margin: 0 0 15px;
     font-style: italic;
     text-align: right;
 }
@@ -73,44 +73,42 @@ h2 {
     cursor: pointer;
 }
 
-
-
-/* SCORE PANEL */
-
-.score-panel {
-    text-align: center;
-    width: 580px;
-    padding: 0 30px;
-    margin-bottom: 15px;
-}
-
-.score-panel .stars {
-    margin: 20px 0 10px;
-    padding: 0;
-    display: inline-block;
-}
-
-.score-panel .stars li {
-    list-style: none;
-    display: inline-block;
-    padding: 8px;
-}
-
-.stars .fa {
-    color: rgba(10, 61, 71, 0.85);
-    font-size: 1.6em;
-}
-
 .reload-button:hover,
 .reload-button:active,
 .reload-button:focus {
     opacity: .9;
 }
 
+/* SCORE PANEL */
+
+.score-panel {
+    text-align: center;
+    width: 580px;
+    margin-bottom: 15px;
+    padding: 0 30px;
+}
+
+.score-panel .stars {
+    display: inline-block;
+    margin: 10px 0;
+    padding: 0;
+}
+
+.score-panel .stars li {
+    display: inline-block;
+    padding: 8px;
+    list-style: none;
+}
+
+.stars .fa {
+    color: rgba(10, 61, 71, 0.85);
+    font-size: 1.4em;
+}
+
 .moves,
 .timer {
-    padding-top: 5px;
     width: 100px;
+    padding-top: 5px;
 }
 
 .moves {
@@ -121,16 +119,19 @@ h2 {
     float: right;
 }
 
+.score-panel::after {
+    clear: both;
+}
+
+
 /* BOARD */
 
 .deck {
     width: 580px;
     min-height: 580px;
-    background: rgba(46, 61, 73, 0.8);
+    margin: 0 0 2em;
     padding: 15px 30px;
-    border-radius: 10px;
-    -webkit-box-shadow: 12px 15px 20px 0 rgba(46, 61, 73, 0.5);
-    box-shadow: 12px 15px 20px 0 rgba(46, 61, 73, 0.5);
+    position: relative;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -142,19 +143,16 @@ h2 {
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
-    margin: 0 0 2em;
-    position: relative;
+    background: rgba(46, 61, 73, 0.8);
+    border-radius: 10px;
+    -webkit-box-shadow: 12px 15px 20px 0 rgba(46, 61, 73, 0.5);
+    box-shadow: 12px 15px 20px 0 rgba(46, 61, 73, 0.5);
 }
 
 .deck .card-container {
     height: 110px;
     width: 110px;
     position: relative;
-    background: rgba(46, 61, 73, 0.8);
-    font-size: 0;
-    color: #fff;
-    border-radius: 6px;
-    cursor: pointer;
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -163,11 +161,16 @@ h2 {
     justify-content: center;
     -webkit-box-align: center;
     -ms-flex-align: center;
+    background: rgba(46, 61, 73, 0.8);
+    font-size: 0;
+    color: #fff;
+    border-radius: 6px;
     align-items: center;
     -webkit-box-shadow: 5px 2px 10px 0 rgba(46, 61, 73, 0.8);
     box-shadow: 5px 2px 10px 0 rgba(46, 61, 73, 0.8);
     -webkit-perspective: 1000px;
     perspective: 1000px;
+    cursor: pointer;
 }
 
 .card-container .card {
@@ -185,11 +188,11 @@ h2 {
 }
 
 .card figure {
-    margin: 0;
     display: block;
     position: absolute;
     width: 100%;
     height: 100%;
+    margin: 0;
     -webkit-backface-visibility: hidden;
     backface-visibility: hidden;
     text-align: center;
@@ -227,21 +230,22 @@ h2 {
 .flag-info {
     display: none;
     position: absolute;
-    top: 120px;
-    right: 10px;
+    top: 210px;
+    right: 30px;
 }
 
 .bubble {
     position: relative;
+    padding: 12px;
     background: rgba(255, 255, 255, 0.8);
     border-radius: .3em;
-    padding: 12px;
 }
 
 .bubble p {
     margin: 0;
-    padding: 0;
-    font-size: 1em;
+    padding: 5px 10px;
+    font-size: 1.2em;
+    font-weight: 700;
 }
 
 .bubble:after {
@@ -251,12 +255,13 @@ h2 {
     top: 50%;
     width: 0;
     height: 0;
+    margin-top: -8.5px;
+    margin-right: -15px;
     border: 15px solid transparent;
     border-left-color: rgba(255, 255, 255, 0.8);
     border-right: 0;
     border-bottom: 0;
-    margin-top: -8.5px;
-    margin-right: -15px;
+
 }
 
 /* MODAL */
@@ -270,15 +275,15 @@ h2 {
     width: 100%;
     height: 100%;
     background-color: rgba(27, 110, 128, 0.9);
+    color: #175e6d;
     text-align: center;
-    color: #175e6d
 }
 
 .modal-content {
-    background-color: #fff;
     margin: 20% auto;
     padding: 40px;
     width: 50%;
+    background-color: #fff;
     border-radius: 8px;
     border: 1px solid #0b2f36;
     -webkit-box-shadow: 7px 7px 15px 0 rgba(0, 0, 0, 0.3), 0 7px 25px 0 rgba(0, 0, 0, 0.2);
@@ -317,8 +322,8 @@ modal .reload-button:hover {
 }
 
 .modal-content .fa-star {
-    font-size: 1em;
     padding: 0 5px;
+    font-size: 1em;
 }
 
 h3 {
@@ -329,14 +334,14 @@ h3 {
 /* FOOTER */
 
 footer {
-    text-align: center;
     margin: 0 auto 20px;
+    text-align: center;
 }
 
 footer p {
-    font-size: 0.7em;
     margin: 0;
     padding: 0;
+    font-size: 0.7em;
 }
 
 a {
@@ -353,22 +358,18 @@ a {
 
 @media screen and (max-width: 450px) {
     h1 {
-        font-size: 1.8em;
         margin: 30px 5px 5px;
+        font-size: 1.8em;
     }
 
     h2 {
-        font-size: 1em;
         margin: 0 10px 10px;
+        font-size: 1em;
     }
 
     .score-panel {
         width: 320px;
         padding: 5px;
-    }
-
-    .score-panel .stars {
-        margin: 15px 0;
     }
 
     .stars .fa {
@@ -382,7 +383,9 @@ a {
 
     .score-panel .reload-button {
         width: 90px;
+        border: 1px solid #fff;
     }
+
     .deck {
         width: 320px;
         min-height: 320px;
@@ -394,6 +397,16 @@ a {
     }
     .modal-content {
         width: 80%;
+    }
+
+    .flag-info {
+        top: 110px;
+        right: 20px;
+    }
+
+    .bubble p {
+        padding: 0;
+        font-size: 0.9em;
     }
 }
 
@@ -438,4 +451,8 @@ a {
         height: 90px;
     }
 
+    .bubble p {
+        padding: 0;
+        font-size: 1em;
+    }
 }
