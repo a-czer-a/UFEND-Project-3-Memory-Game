@@ -122,6 +122,7 @@ function createNewBoard() {
 
     const shuffledBoard = shuffle(cards);
 
+    // creates HTML structure needed to display the board
     for (let i = 0; i < shuffledBoard.length; i++) {
         const cardContainer = document.createElement('li');
         const singleCard = document.createElement('div');
@@ -185,7 +186,7 @@ function handleCardClick(event) {
     parentCard.classList.add('flipped');
     const figureId = parentCard.getAttribute('id');
 
-    flippedCards.push(figureId);
+    flippedCards.push(figureId); // stores flipped cards id's, max. 2
     firstCardIsFlipped = true;
 
     if (flippedCards.length === 2) {
@@ -198,23 +199,23 @@ function handleCardClick(event) {
         const previousCard = document.querySelector('#' + figureOne);
         if (pairIsMatched(figureOne, figureTwo)) {
             setTimeout(function () {
-                previousCard.lastChild.classList.add('matched');
+                previousCard.lastChild.classList.add('matched'); // adds style for matched cards
                 parentCard.lastChild.classList.add('matched');
             }, 700);
 
-            matchedCards.push(figureTwo); // store id's of matched cards 
-            showInfoBubble(cardsLabels[figureOne]); // pass matching id to function displaying info about flag's owner
+            matchedCards.push(figureTwo); // stores id's of matched cards 
+            showInfoBubble(cardsLabels[figureOne]); // passes matching id to function displaying info about flag's owner
             checkWinningCondition();
         } else {
             setTimeout(function () {
-                previousCard.classList.remove('flipped');
+                previousCard.classList.remove('flipped'); // flips not matched cards face down
                 parentCard.classList.remove('flipped');
             }, 700);
         }
     }
 }
 
-function pairIsMatched(figureOne, figureTwo) {
+function pairIsMatched(figureOne, figureTwo) { // checks if figures' (flags') id's are equal
     const figureOneId = figureOne.substr(0, 5);
     const figureTwoId = figureTwo.substr(0, 5);
     if (figureOneId === figureTwoId) {
@@ -241,14 +242,14 @@ function rateWithStars() {
     const starThree = document.getElementById('star-three');
 
     if (moves >= 30) {
-        starTwo.innerHTML = '<i class="fa fa-star-o" aria-hidden="true"></i>';
+        starTwo.innerHTML = '<i class="fa fa-star-o" aria-hidden="true"></i>'; // changes full star for empty one
     } else if (moves >= 20) {
         starThree.innerHTML = '<i class="fa fa-star-o" aria-hidden="true"></i>';
     }
 }
 
 function displayRating() {
-    const ratingInfo = document.getElementById('rating-info');
+    const ratingInfo = document.getElementById('rating-info'); // shows full stars 
     if (moves >= 30) {
         ratingInfo.innerHTML = '<i class="fa fa-star" aria-hidden="true">';
     } else if (moves >= 20) {
@@ -269,14 +270,14 @@ function checkWinningCondition() {
 }
 
 // RESETING SCORES
-function resetRating() {
+function resetRating() { // adds to the score panel only full stars
     starOne.innerHTML = '<i class="fa fa-star" aria-hidden="true"></i>';
     starTwo.innerHTML = '<i class="fa fa-star" aria-hidden="true"></i>';
     starThree.innerHTML = '<i class="fa fa-star" aria-hidden="true"></i>';
 }
 
 // block: TIMER
-function timer(time) {
+function timer(time) { // sets proper display of seconds
     if (time > 9) {
         return time;
     } else {
@@ -297,12 +298,12 @@ function startCountingTime() {
     }
 }
 
-function displayTime() {
+function displayTime() { // adds time to timer elements in the score panel and modal
     document.getElementsByClassName('time')[0].innerHTML = getTime();
     document.getElementsByClassName('time')[1].innerHTML = getTime();
 }
 
-function setupTimer() {
+function setupTimer() { // counts time every second
     countTime = setInterval(startCountingTime, 1000);
     document.getElementById('timer').innerHTML = '00:00';
     seconds = 0;
