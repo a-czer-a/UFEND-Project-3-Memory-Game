@@ -118,7 +118,7 @@ let seconds = 0;
 
 // CLEARING AND CREATING BOARD
 function createNewBoard() {
-    board.innerHTML = ""; // clears the board if there is any
+    board.innerHTML = ''; // clears the board if there is any
 
     const shuffledBoard = shuffle(cards);
 
@@ -229,9 +229,9 @@ function pairIsMatched(figureOne, figureTwo) { // checks if figures' (flags') id
 function countMoves() {
     const displayedMovesNumber = document.getElementById('moves-counter');
     if (moves === 1) {
-        displayedMovesNumber.innerHTML = moves + " move";
+        displayedMovesNumber.innerHTML = moves + ' move';
     } else {
-        displayedMovesNumber.innerHTML = moves + " moves";
+        displayedMovesNumber.innerHTML = moves + ' moves';
     }
 }
 
@@ -278,11 +278,7 @@ function resetRating() { // adds to the score panel only full stars
 
 // block: TIMER
 function timer(time) { // sets proper display of seconds
-    if (time > 9) {
-        return time;
-    } else {
-        return "0" + time;
-    }
+    return time > 9 ? time : '0' + time;
 }
 
 function getTime() {
@@ -330,13 +326,13 @@ function hideCongratulationsPopup() {
 function showInfoBubble(label) {
     const flagName = document.getElementById('flag-name');
     flagName.innerHTML = label;
-    bubble.style.display = "block";
+    bubble.style.display = 'block';
     hideInfoBubble();
 }
 
 function hideInfoBubble() {
     setTimeout(function () {
-        bubble.style.display = "none";
+        bubble.style.display = 'none';
     }, 1900);
 }
 
