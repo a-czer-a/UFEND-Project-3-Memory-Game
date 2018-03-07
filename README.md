@@ -1,6 +1,15 @@
 ## **Description**
 
-This project of a memory game app was accomplished as a part of Udacity Front-End Nanodegree and uses HTML, CSS, and pure JavaScript. 
+This project of a memory game app was accomplished as a part of Udacity Front-End Nanodegree.
+
+## **Code Dependencies**
+
+The app is built with the following dependencies:
+- HTML5
+- CSS3
+- JavaScript.
+
+The shuffle() function was provided by Udacity (from [Stackoverflow](http://stackoverflow.com/a/2450976)).
 
 ## **How to play**
 
