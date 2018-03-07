@@ -10,7 +10,6 @@ function initializeMemoryGame() {
     firstCardIsFlipped = false;
     countMoves();
     setupTimer();
-    rateWithStars();
 }
 
 const board = document.getElementById('board');
@@ -164,6 +163,7 @@ function shuffle(array) {
 }
 
 // block: ADDING EVENT LISTENERS
+
 function addEventListenersToCards() {
     const clickedFigures = document.querySelectorAll('.front');
     for (let i = 0; i < clickedFigures.length; i++) {
@@ -236,6 +236,7 @@ function countMoves() {
 }
 
 // block: STAR RATING
+
 function rateWithStars() {
     const starOne = document.getElementById('star-one');
     const starTwo = document.getElementById('star-two');
@@ -259,7 +260,7 @@ function displayRating() {
     }
 }
 
-// CHECKING IF USER WON
+// CHECKING IF USER HAS WON
 function checkWinningCondition() {
     if (matchedCards.length === 8) {
         resetTimer();
@@ -277,6 +278,7 @@ function resetRating() { // adds to the score panel only full stars
 }
 
 // block: TIMER
+
 function timer(time) { // sets proper display of seconds
     return time > 9 ? time : '0' + time;
 }
@@ -310,6 +312,7 @@ function resetTimer() {
 }
 
 // block: SHOWING AND HIDING CONGRATULATIONS POPUP
+
 function showCongratulationsPopup() {
     setTimeout(function () {
         const modal = document.getElementById('popup-window');
@@ -323,6 +326,7 @@ function hideCongratulationsPopup() {
 }
 
 // block: SHOWING AND HIDING BUBBLE WITH COUNTRY NAME
+
 function showInfoBubble(label) {
     const flagName = document.getElementById('flag-name');
     flagName.innerHTML = label;
