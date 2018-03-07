@@ -1,4 +1,5 @@
 function initializeMemoryGame() {
+    flippedCards.length = 0;
     hideCongratulationsPopup();
     resetTimer();
     resetRating();
