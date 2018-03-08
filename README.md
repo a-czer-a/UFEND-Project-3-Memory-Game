@@ -7,7 +7,11 @@ This project of a memory game app was accomplished as a part of Udacity Front-En
 The app is built with the following dependencies:
 - HTML5
 - CSS3
-- JavaScript.
+- JavaScript
+- Google Fonts (Alegreya Sans, Coda, Kaushan Script)
+- Font Awesome icons
+- [Freepik](https://www.freepik.com/free-vector/flat-map-compass-background_1581318.htm) background image
+- [Flaticon](www.flaticon.com) icons by Freepik
 
 The shuffle() function was provided by Udacity (from [Stackoverflow](http://stackoverflow.com/a/2450976)).
 
