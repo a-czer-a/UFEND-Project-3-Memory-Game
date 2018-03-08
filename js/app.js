@@ -9,7 +9,7 @@ function initializeMemoryGame() {
     moves = 0;
     matchedCards = [];
     firstCardIsFlipped = false;
-    countMoves();
+    updateMovesLabel();
     setupTimer();
 }
 
@@ -100,9 +100,12 @@ const cardsLabels = {
     'img-8-2': 'Poland',
 };
 
-const flippedCards = []; // stores cards flipped in 1 move
-let firstCardIsFlipped = false; // condition to start counting time
-let matchedCards = []; // stores all matched cards
+// stores cards flipped in 1 move
+const flippedCards = [];
+// condition to start counting time
+let firstCardIsFlipped = false;
+// stores all matched cards
+let matchedCards = [];
 
 const starOne = document.getElementById('star-one');
 const starTwo = document.getElementById('star-two');
@@ -118,7 +121,8 @@ let seconds = 0;
 
 // CLEARING AND CREATING BOARD
 function createNewBoard() {
-    board.innerHTML = ''; // clears the board if there is any
+    // clears the board if there is any
+    board.innerHTML = '';
 
     const shuffledBoard = shuffle(cards);
 
@@ -180,26 +184,27 @@ function addEventListenersToReloadButtons() {
     modalButton.addEventListener('click', initializeMemoryGame);
 }
 
-// FLIPPING AND MATCHING CARDS
+// block: FLIPPING AND MATCHING CARDS
+
 function handleCardClick(event) {
     const clickedFigure = event.target;
     const parentCard = clickedFigure.parentElement;
     parentCard.classList.add('flipped');
     const figureId = parentCard.getAttribute('id');
 
-    flippedCards.push(figureId); // stores flipped cards id's, max. 2
+    // stores flipped cards id's, max. 2
+    flippedCards.push(figureId);
     firstCardIsFlipped = true;
 
-    if (firstCardIsFlipped) { // temporarily removes event listener from the first clicked card to prevent dubleclick and incorrect matching of the same card
-        clickedFigure.removeEventListener('click', handleCardClick);
-        setTimeout(function () {
-            clickedFigure.addEventListener('click', handleCardClick);
-        }, 700);
-    }
+    // temporarily removes event listener from the first clicked card to prevent                                                                     dubleclick and incorrect match
+    clickedFigure.removeEventListener('click', handleCardClick);
+    setTimeout(function () {
+        clickedFigure.addEventListener('click', handleCardClick);
+    }, 600);
 
     if (flippedCards.length === 2) {
         moves = moves + 1;
-        countMoves();
+        updateMovesLabel();
         rateWithStars();
 
         const figureTwo = flippedCards.pop();
@@ -208,22 +213,27 @@ function handleCardClick(event) {
 
         if (pairIsMatched(figureOne, figureTwo)) {
             setTimeout(function () {
-                previousCard.lastChild.classList.add('matched'); // adds style for matched cards
+                // adds style for matched cards
+                previousCard.lastChild.classList.add('matched');
                 parentCard.lastChild.classList.add('matched');
-            }, 700);
-            matchedCards.push(figureTwo); // stores id's of matched cards 
-            showInfoBubble(cardsLabels[figureOne]); // passes matching id to function displaying info about flag's owner
+            }, 600);
+            // stores id's of matched cards
+            matchedCards.push(figureTwo);
+            // passes matching id to function displaying info about flag's owner
+            showInfoBubble(cardsLabels[figureOne]);
             checkWinningCondition();
         } else {
             setTimeout(function () {
-                previousCard.classList.remove('flipped'); // flips not matched cards face down
+                // flips not matched cards face down
+                previousCard.classList.remove('flipped');
                 parentCard.classList.remove('flipped');
-            }, 700);
+            }, 600);
         }
     }
 }
 
-function pairIsMatched(figureOne, figureTwo) { // checks if figures' (flags') id's are equal and not the same
+// checks if figures' (flags') id's are equal and not the same
+function pairIsMatched(figureOne, figureTwo) {
     const figureOneId = figureOne.substr(0, 5);
     const figureTwoId = figureTwo.substr(0, 5);
 
@@ -237,8 +247,7 @@ function pairIsMatched(figureOne, figureTwo) { // checks if figures' (flags') id
     }
 }
 
-// COUNTING MOVES
-function countMoves() {
+function updateMovesLabel() {
     const displayedMovesNumber = document.getElementById('moves-counter');
     if (moves === 1) {
         displayedMovesNumber.innerHTML = moves + ' move';
@@ -254,15 +263,17 @@ function rateWithStars() {
     const starTwo = document.getElementById('star-two');
     const starThree = document.getElementById('star-three');
 
+    // changes full star for empty one
     if (moves >= 30) {
-        starTwo.innerHTML = '<i class="fa fa-star-o" aria-hidden="true"></i>'; // changes full star for empty one
+        starTwo.innerHTML = '<i class="fa fa-star-o" aria-hidden="true"></i>';
     } else if (moves >= 20) {
         starThree.innerHTML = '<i class="fa fa-star-o" aria-hidden="true"></i>';
     }
 }
 
 function displayRating() {
-    const ratingInfo = document.getElementById('rating-info'); // shows full stars 
+    // shows full stars
+    const ratingInfo = document.getElementById('rating-info');
     if (moves >= 30) {
         ratingInfo.innerHTML = '<i class="fa fa-star" aria-hidden="true">';
     } else if (moves >= 20) {
@@ -272,7 +283,6 @@ function displayRating() {
     }
 }
 
-// CHECKING IF USER HAS WON
 function checkWinningCondition() {
     if (matchedCards.length === 8) {
         resetTimer();
@@ -282,8 +292,8 @@ function checkWinningCondition() {
     }
 }
 
-// RESETING SCORES
-function resetRating() { // adds to the score panel only full stars
+// adds to the score panel only full stars
+function resetRating() {
     starOne.innerHTML = '<i class="fa fa-star" aria-hidden="true"></i>';
     starTwo.innerHTML = '<i class="fa fa-star" aria-hidden="true"></i>';
     starThree.innerHTML = '<i class="fa fa-star" aria-hidden="true"></i>';
@@ -291,7 +301,8 @@ function resetRating() { // adds to the score panel only full stars
 
 // block: TIMER
 
-function timer(time) { // sets proper display of seconds
+// sets proper display of seconds
+function timer(time) {
     return time > 9 ? time : '0' + time;
 }
 
@@ -303,17 +314,19 @@ function getTime() {
 
 function startCountingTime() {
     if (firstCardIsFlipped) {
-        ++seconds
+        ++seconds;
         displayTime();
     }
 }
 
-function displayTime() { // adds time to timer elements in the score panel and modal
+// adds time to timer elements in the score panel and modal
+function displayTime() {
     document.getElementsByClassName('time')[0].innerHTML = getTime();
     document.getElementsByClassName('time')[1].innerHTML = getTime();
 }
 
-function setupTimer() { // counts time every second
+// counts time every second
+function setupTimer() {
     countTime = setInterval(startCountingTime, 1000);
     document.getElementById('timer').innerHTML = '00:00';
     seconds = 0;
