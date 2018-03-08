@@ -198,6 +198,7 @@ function handleCardClick(event) {
     }
 
     if (flippedCards.length === 2) {
+        moves = moves + 1;
         countMoves();
         rateWithStars();
 
@@ -210,7 +211,6 @@ function handleCardClick(event) {
                 previousCard.lastChild.classList.add('matched'); // adds style for matched cards
                 parentCard.lastChild.classList.add('matched');
             }, 700);
-
             matchedCards.push(figureTwo); // stores id's of matched cards 
             showInfoBubble(cardsLabels[figureOne]); // passes matching id to function displaying info about flag's owner
             checkWinningCondition();
@@ -220,7 +220,6 @@ function handleCardClick(event) {
                 parentCard.classList.remove('flipped');
             }, 700);
         }
-        moves = moves + 1;
     }
 }
 
