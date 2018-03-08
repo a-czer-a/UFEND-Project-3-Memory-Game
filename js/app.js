@@ -190,14 +190,21 @@ function handleCardClick(event) {
     flippedCards.push(figureId); // stores flipped cards id's, max. 2
     firstCardIsFlipped = true;
 
+    if (firstCardIsFlipped) { // temporarily removes event listener from the first clicked card to prevent dubleclick and incorrect matching of the same card
+        clickedFigure.removeEventListener('click', handleCardClick);
+        setTimeout(function () {
+            clickedFigure.addEventListener('click', handleCardClick);
+        }, 700);
+    }
+
     if (flippedCards.length === 2) {
-        moves = moves + 1;
         countMoves();
         rateWithStars();
 
         const figureTwo = flippedCards.pop();
         const figureOne = flippedCards.pop();
         const previousCard = document.querySelector('#' + figureOne);
+
         if (pairIsMatched(figureOne, figureTwo)) {
             setTimeout(function () {
                 previousCard.lastChild.classList.add('matched'); // adds style for matched cards
@@ -213,12 +220,17 @@ function handleCardClick(event) {
                 parentCard.classList.remove('flipped');
             }, 700);
         }
+        moves = moves + 1;
     }
 }
 
-function pairIsMatched(figureOne, figureTwo) { // checks if figures' (flags') id's are equal
+function pairIsMatched(figureOne, figureTwo) { // checks if figures' (flags') id's are equal and not the same
     const figureOneId = figureOne.substr(0, 5);
     const figureTwoId = figureTwo.substr(0, 5);
+
+    if (figureOne === figureTwo) {
+        return false;
+    }
     if (figureOneId === figureTwoId) {
         return true;
     } else {
